@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using ArgysApi.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ArgysApiContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ArgysApiContext") ?? throw new InvalidOperationException("Connection string 'ArgysApiContext' not found.")));
 
 // Add services to the container.
 
