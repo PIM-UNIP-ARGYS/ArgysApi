@@ -19,13 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\FolhaPagamento\" />
-    <Folder Include="Controllers\Impostos\" />
-    <Folder Include="Controllers\Pessoas\" />
-    <Folder Include="Controllers\Vinculos\" />
     <Folder Include="Models\FolhaPagamento\" />
-    <Folder Include="Models\Impostos\" />
-    <Folder Include="Models\Vinculos\" />
-    <Folder Include="Models\Pessoas\" />
   </ItemGroup>
 
 </Project>
