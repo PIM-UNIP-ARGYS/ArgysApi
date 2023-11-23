@@ -3,6 +3,17 @@
     "mssql1": {
       "type": "mssql.local",
       "connectionId": "ConnectionStrings:ArgysApiContext"
+    },
+    "secrets1": {
+      "type": "secrets.user"
+    },
+    "mssql2": {
+      "serviceConnectorResourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ServiceLinker/locations/eastus/connectors/ConnectionStringswebapiContext_8F1A08E23B",
+      "secretStore": "LocalSecretsFile",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/pym-teste/databases/ArgysApi_db",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:webapiContext",
+      "dynamicId": null
     }
   }
 }
