@@ -25,7 +25,6 @@
     <Folder Include="mappers\FolhaPagamento\" />
     <Folder Include="mappers\Impostos\" />
     <Folder Include="mappers\Pessoas\" />
-    <Folder Include="mappers\Usuarios\" />
     <Folder Include="mappers\Vinculos\" />
     <Folder Include="Models\FolhaPagamento\" />
     <Folder Include="request\Empresas\" />
@@ -33,14 +32,12 @@
     <Folder Include="request\FolhaPagamento\" />
     <Folder Include="request\Impostos\" />
     <Folder Include="request\Vinculos\" />
-    <Folder Include="request\Usuarios\" />
     <Folder Include="request\Pessoas\" />
     <Folder Include="response\Empresas\" />
     <Folder Include="response\Feriados\" />
     <Folder Include="response\FolhaPagamento\" />
     <Folder Include="response\Impostos\" />
     <Folder Include="response\Pessoas\" />
-    <Folder Include="response\Usuarios\" />
     <Folder Include="response\Vinculos\" />
   </ItemGroup>
 

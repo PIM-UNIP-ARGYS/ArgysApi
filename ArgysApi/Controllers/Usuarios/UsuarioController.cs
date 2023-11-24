@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ArgysApi.Data;
 using ArgysApi.Models.Usuarios;
+using ArgysApi.request.Usuarios;
+using ArgysApi.response.Usuarios;
+using ArgysApi.mappers.Usuarios;
 
 namespace ArgysApi.Controllers.Usuarios
 {
@@ -25,10 +28,10 @@ namespace ArgysApi.Controllers.Usuarios
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuario()
         {
-          if (_context.Usuario == null)
-          {
-              return NotFound();
-          }
+            if (_context.Usuario == null)
+            {
+                return NotFound();
+            }
             return await _context.Usuario.ToListAsync();
         }
 
@@ -36,10 +39,10 @@ namespace ArgysApi.Controllers.Usuarios
         [HttpGet("{id}")]
         public async Task<ActionResult<Usuario>> GetUsuario(long id)
         {
-          if (_context.Usuario == null)
-          {
-              return NotFound();
-          }
+            if (_context.Usuario == null)
+            {
+                return NotFound();
+            }
             var usuario = await _context.Usuario.FindAsync(id);
 
             if (usuario == null)
@@ -84,16 +87,21 @@ namespace ArgysApi.Controllers.Usuarios
         // POST: api/Usuario
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
+        public async Task<ActionResult<UsuarioResponse>> PostUsuario(UsuarioRequest request)
         {
-          if (_context.Usuario == null)
-          {
-              return Problem("Entity set 'ArgysApiContext.Usuario'  is null.");
-          }
+            if (_context.Usuario == null)
+            {
+                return Problem("Entity set 'ArgysApiContext.Usuario'  is null.");
+            }
+
+            Usuario usuario = UsuarioMapper.ToUsuarioEntity(request);
+
             _context.Usuario.Add(usuario);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUsuario", new { id = usuario.Id }, usuario);
+            UsuarioResponse response = UsuarioMapper.ToUsuarioResponse(usuario);
+
+            return CreatedAtAction("GetUsuario", response);
         }
 
         // DELETE: api/Usuario/5
