@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ArgysApi.Models.Vinculos
 {
-    [Table("vinculo", Schema = "pimdb")]
+    [Table("vinculo", Schema = "dbo")]
     public class Vinculo
     {
         [Key]

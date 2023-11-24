@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ArgysApi.Models.Impostos
 {
-    [Table("inss", Schema = "pimdb")]
+    [Table("inss", Schema = "dbo")]
     public class Inss
     {
         [Key]

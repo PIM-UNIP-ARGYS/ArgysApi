@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ArgysApi.Models.Vinculos
 {
-    [Table("quadro_horario", Schema = "pimdb")]
+    [Table("quadro_horario", Schema = "dbo")]
     public class QuadroHorario
     {
         [Key]

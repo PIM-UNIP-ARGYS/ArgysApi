@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ArgysApi.Models.Vinculos
 {
-    [Table("plr_seg", Schema = "pimdb")]
+    [Table("plr_seg", Schema = "dbo")]
     public class PlrSeg
     {
         [Key]

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ArgysApi.Models.Feriados
 {
-    [Table("feriado", Schema = "pimdb")]
+    [Table("feriado", Schema = "dbo")]
     public class Feriado
     {
         [Key]

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ArgysApi.Models.Pessoas
 {
-    [Table("pessoa_email", Schema = "pimdb")]
+    [Table("pessoa_email", Schema = "dbo")]
     public class PessoaEmail
     {
         [Key]

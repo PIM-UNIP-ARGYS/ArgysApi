@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ArgysApi.Models.Impostos
 {
-    [Table("irrf", Schema = "pimdb")]
+    [Table("irrf", Schema = "dbo")]
     public class Irrf
     {
         [Key]
