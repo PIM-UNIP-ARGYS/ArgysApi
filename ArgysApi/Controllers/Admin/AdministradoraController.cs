@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ArgysApi.Data;
 using ArgysApi.Models.Admin;
+using ArgysApi.request.Admin;
+using ArgysApi.mappers.Admin;
 
 namespace ArgysApi.Controllers.Admin
 {
@@ -15,10 +17,12 @@ namespace ArgysApi.Controllers.Admin
     public class AdministradoraController : ControllerBase
     {
         private readonly ArgysApiContext _context;
+        private readonly AdministradoraMapper _mapper;
 
-        public AdministradoraController(ArgysApiContext context)
+        public AdministradoraController(ArgysApiContext context, AdministradoraMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Administradora
@@ -84,16 +88,21 @@ namespace ArgysApi.Controllers.Admin
         // POST: api/Administradora
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Administradora>> PostAdministradora(Administradora administradora)
+        public async Task<ActionResult<AdministradoraResponse>> PostAdministradora(AdministradoraRequest request)
         {
             if (_context.Administradora == null)
             {
                 return Problem("Entity set 'ArgysApiContext.Administradora'  is null.");
             }
+
+            Administradora administradora = _mapper.MapToEntity(request);
+
             _context.Administradora.Add(administradora);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAdministradora", new { id = administradora.Id }, administradora);
+            AdministradoraResponse administradoraResponse = _mapper.MapToResponse(administradora);
+
+            return CreatedAtAction("GetAdministradora", administradoraResponse);
         }
 
         // DELETE: api/Administradora/5
