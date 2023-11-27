@@ -4,6 +4,15 @@ using ArgysApi.Data;
 using ArgysApi.mappers.Admin;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAnyOrigins", builder =>
+    {
+        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
 builder.Services.AddDbContext<ArgysApiContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ArgysApiContext") ?? throw new InvalidOperationException("Connection string 'ArgysApiContext' not found.")));
 
@@ -18,6 +27,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<AdministradoraMapper>();
 
 var app = builder.Build();
+
+app.UseCors("AllowAnyOrigins");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

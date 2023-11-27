@@ -13,7 +13,7 @@ namespace ArgysApi.Models.Usuarios
         [Required]
         [Column("uuid")]
         [MaxLength(45)]
-        public Guid Uuid { get; set; }
+        public string Uuid { get; set; }
 
         [Required]
         [Column("nome")]

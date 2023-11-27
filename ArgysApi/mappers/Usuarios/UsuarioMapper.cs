@@ -28,7 +28,7 @@ namespace ArgysApi.mappers.Usuarios
         {
             return new Usuario
             {
-                Uuid = Guid.NewGuid(),
+                Uuid = Guid.NewGuid().ToString(),
                 Nome = usuarioRequest.Nome,
                 UsuarioNome = usuarioRequest.UsuarioNome,
                 Senha = usuarioRequest.Senha,

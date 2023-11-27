@@ -2,7 +2,7 @@
 {
     public class UsuarioResponse
     {
-        public Guid Uuid { get; set; }
+        public string Uuid { get; set; }
         public string Nome { get; set; }
         public string UsuarioNome { get; set; }
         public string Senha { get; set; }

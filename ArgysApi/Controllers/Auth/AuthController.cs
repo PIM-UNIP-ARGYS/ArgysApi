@@ -30,7 +30,7 @@ namespace ArgysApi.Controllers.Auth
                 return Unauthorized();
             }
 
-            return Ok(existingUser);
+            return Ok();
         }
     }
 }
