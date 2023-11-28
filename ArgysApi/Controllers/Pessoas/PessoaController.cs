@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ArgysApi.Data;
 using ArgysApi.Models.Pessoas;
+using ArgysApi.request.Pessoas;
+using ArgysApi.response.Pessoas;
+using ArgysApi.mappers.Pessoas;
 
 namespace ArgysApi.Controllers.Pessoas
 {
@@ -84,16 +87,30 @@ namespace ArgysApi.Controllers.Pessoas
         // POST: api/Pessoa
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Pessoa>> PostPessoa(Pessoa pessoa)
+        public async Task<ActionResult<PessoaResponse>> PostPessoa(PessoaRequest request)
         {
-          if (_context.Pessoa == null)
-          {
-              return Problem("Entity set 'ArgysApiContext.Pessoa'  is null.");
-          }
+            if (_context.Pessoa == null)
+            {
+                return Problem("Entity set 'ArgysApiContext.Pessoa'  is null.");
+            }
+
+            Pessoa pessoa = PessoaMapper.ToPessoaEntity(request);
+
             _context.Pessoa.Add(pessoa);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPessoa", new { id = pessoa.Id }, pessoa);
+            PessoaEmail email = PessoaEmailMapper.ToPessoaEntity(request, pessoa.Id);
+            PessoaEndereco endereco = PessoaEnderecoMapper.ToPessoaEntity(request, pessoa.Id);
+            PessoaTelefone telefone = PessoaTelefoneMapper.ToPessoaEntity(request, pessoa.Id);
+
+            _context.PessoaEmail.Add(email);
+            _context.PessoaEndereco.Add(endereco);
+            _context.PessoaTelefone.Add(telefone);
+            await _context.SaveChangesAsync();
+
+            PessoaResponse response = PessoaMapper.ToPessoaResponse(pessoa, email, endereco, telefone);    
+
+            return CreatedAtAction("GetPessoa", response);
         }
 
         // DELETE: api/Pessoa/5
