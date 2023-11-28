@@ -94,19 +94,38 @@ namespace ArgysApi.Controllers.Pessoas
                 return Problem("Entity set 'ArgysApiContext.Pessoa'  is null.");
             }
 
+            int newCode = this.GetNewCode();
+
             Pessoa pessoa = PessoaMapper.ToPessoaEntity(request);
+            pessoa.Codigo = newCode.ToString();
 
             _context.Pessoa.Add(pessoa);
             await _context.SaveChangesAsync();
 
-            PessoaEmail email = PessoaEmailMapper.ToPessoaEntity(request, pessoa.Id);
-            PessoaEndereco endereco = PessoaEnderecoMapper.ToPessoaEntity(request, pessoa.Id);
-            PessoaTelefone telefone = PessoaTelefoneMapper.ToPessoaEntity(request, pessoa.Id);
+            PessoaEmail email = null;
+            PessoaEndereco endereco = null;
+            PessoaTelefone telefone = null;
 
-            _context.PessoaEmail.Add(email);
-            _context.PessoaEndereco.Add(endereco);
-            _context.PessoaTelefone.Add(telefone);
-            await _context.SaveChangesAsync();
+            if (request.Email != null)
+            {
+                email = PessoaEmailMapper.ToPessoaEntity(request, pessoa.Id);
+                _context.PessoaEmail.Add(email);
+                await _context.SaveChangesAsync();
+            }
+
+            if (request.Endereco != null)
+            {
+                endereco = PessoaEnderecoMapper.ToPessoaEntity(request, pessoa.Id);
+                _context.PessoaEndereco.Add(endereco);
+                await _context.SaveChangesAsync();
+            }
+
+            if (request.Telefone != null)
+            {
+                telefone = PessoaTelefoneMapper.ToPessoaEntity(request, pessoa.Id);
+                _context.PessoaTelefone.Add(telefone);
+                await _context.SaveChangesAsync();
+            }
 
             PessoaResponse response = PessoaMapper.ToPessoaResponse(pessoa, email, endereco, telefone);    
 
@@ -136,6 +155,21 @@ namespace ArgysApi.Controllers.Pessoas
         private bool PessoaExists(long id)
         {
             return (_context.Pessoa?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        private int GetNewCode()
+        {
+            var pessoa = _context.Pessoa.OrderByDescending(p => p.Codigo).FirstOrDefault();
+
+            if (pessoa == null)
+            {
+                return 1;
+            }
+
+            var newCode = int.Parse(pessoa.Codigo) + 1;
+
+            return newCode;
+
         }
     }
 }

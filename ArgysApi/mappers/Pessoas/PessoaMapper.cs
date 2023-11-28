@@ -4,6 +4,9 @@ using ArgysApi.request.Pessoas;
 using ArgysApi.request.Usuarios;
 using ArgysApi.response.Pessoas;
 using ArgysApi.response.Usuarios;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Runtime.ConstrainedExecution;
+using Humanizer;
 
 namespace ArgysApi.mappers.Pessoas
 {
@@ -13,12 +16,12 @@ namespace ArgysApi.mappers.Pessoas
             this Pessoa pessoa, PessoaEmail pessoaEmail, 
             PessoaEndereco pessoaEndereco, PessoaTelefone pessoaTelefone)
         {
-            return new PessoaResponse
+            PessoaResponse response = new PessoaResponse
             {
                 Uuid = pessoa.Uuid,
                 Codigo = pessoa.Codigo,
                 Nome = pessoa.Nome,
-                NomeSocial = pessoa.NomeSocial,
+                NomeSocial = pessoa.NomeSocial ?? null,
                 InformacoesPessoais =
                 {
                     Sexo = pessoa.Genero,
@@ -26,10 +29,10 @@ namespace ArgysApi.mappers.Pessoas
                     EstadoCivil = pessoa.EstadoCivil,
                     DataNascimento = pessoa.DataNascimento,
                     GrauInstituicao = pessoa.GrauInstrucao,
-                    Deficiencia = pessoa.Deficiencia,
+                    Deficiencia = pessoa.Deficiencia ?? null,
                     Nacionalidade = pessoa.Nacionalidade,
                     Mae = pessoa.NomeMae,
-                    Pai = pessoa.NomePai,
+                    Pai = pessoa.NomePai ?? null,
                     CotaDeficiencia = pessoa.CotaDeficiencia,
                     Proprietario = pessoa.Proprietario
                 },
@@ -51,16 +54,16 @@ namespace ArgysApi.mappers.Pessoas
                 },
                 Cnh =
                 {
-                    Numero = pessoa.CnhNumero,
-                    Uf = pessoa.CnhExpedicaoUF,
-                    Categoria = pessoa.CnhCategoria,
+                    Numero = pessoa.CnhNumero ?? null,
+                    Uf = pessoa.CnhExpedicaoUF ?? null,
+                    Categoria = pessoa.CnhCategoria ?? null,
                     Expedicao = (DateTime)(pessoa.CnhDataExpedicao ?? null),
                     DataValidade = (DateTime)(pessoa.CnhDataValidade ?? null),
                     DataPrimeiraCnh = (DateTime)(pessoa.CnhDataPrimeiraHabilitacao ?? null),
                 },
                 Passaporte =
                 {
-                    Numero = pessoa.PassaporteNumero,
+                    Numero = pessoa.PassaporteNumero ?? null,
                     Validade= (DateTime)(pessoa.PassaporteDataValidade ?? null)
                 },
                 Ctps =
@@ -70,29 +73,34 @@ namespace ArgysApi.mappers.Pessoas
                     Serie = pessoa.CtpsSerie,
                     Uf = pessoa.CtpsUf
                 },
-                Endereco =
-                {
-                    Bairro = pessoaEndereco.Bairro,
-                    Cep = pessoaEndereco.Cep,
-                    Cidade = pessoaEndereco.Cidade,
-                    Numero = pessoaEndereco.Numero,
-                    Complemento = pessoaEndereco.Complemento,
-                    Logradouro = pessoaEndereco.Logradouro,
-                    Tipo = pessoaEndereco.TipoEndereco,
-                    Uf = null
-                },
-                Email =
-                {
-                    Contato = pessoaEmail.Contato,
-                    Email = pessoaEmail.Email
-                },
-                Telefone=
-                {
-                    Contato = pessoaTelefone.Contato,
-                    Telefone = pessoaTelefone.Telefone,
-                    Tipo = pessoaTelefone.Tipo
-                }
             };
+
+            if (pessoaEndereco != null)
+            {
+                response.Endereco.Bairro = pessoaEndereco.Bairro;
+                response.Endereco.Cep = pessoaEndereco.Cep;
+                response.Endereco.Cidade = pessoaEndereco.Cidade;
+                response.Endereco.Numero = pessoaEndereco.Numero;
+                response.Endereco.Complemento = pessoaEndereco.Complemento ?? null;
+                response.Endereco.Logradouro = pessoaEndereco.Logradouro;
+                response.Endereco.Tipo = pessoaEndereco.TipoEndereco;
+                response.Endereco.Uf = null;
+            }
+
+            if (pessoaEmail != null)
+            {
+                response.Email.Contato = pessoaEmail.Contato;
+                response.Email.Email = pessoaEmail.Email;
+            }
+
+            if (pessoaTelefone != null)
+            {
+                response.Telefone.Contato = pessoaTelefone.Contato;
+                response.Telefone.Telefone = pessoaTelefone.Telefone;
+                response.Telefone.Tipo = pessoaTelefone.Tipo;
+            }
+
+            return response;
         }
 
         public static Pessoa ToPessoaEntity(this PessoaRequest request)
@@ -109,8 +117,8 @@ namespace ArgysApi.mappers.Pessoas
                 GrauInstrucao = request.InformacoesPessoais.GrauInstituicao,
                 Deficiencia = request.InformacoesPessoais.Deficiencia,
                 Nacionalidade = request.InformacoesPessoais.Nacionalidade,
-                CotaDeficiencia = request.InformacoesPessoais?.CotaDeficiencia,
-                Proprietario = request.InformacoesPessoais?.Proprietario,
+                CotaDeficiencia = request.InformacoesPessoais?.CotaDeficiencia == true ? "SIM" : "NAO",
+                Proprietario = request.InformacoesPessoais?.Proprietario == true ? "SIM" : "NAO",
                 NomeMae = request.InformacoesPessoais.Mae,
                 NomePai = request.InformacoesPessoais.Pai,
                 CPF = request.Documentos.Cpf,

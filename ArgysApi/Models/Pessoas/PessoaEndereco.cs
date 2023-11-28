@@ -57,8 +57,5 @@ namespace ArgysApi.Models.Pessoas
         [Column("tipo_endereco")]
         [MaxLength(45)]
         public string TipoEndereco { get; set; }
-
-        [ForeignKey("pessoa_id")]
-        public Pessoa Pessoa { get; set; }
     }
 }

@@ -33,8 +33,5 @@ namespace ArgysApi.Models.Pessoas
         [Column("tipo")]
         [MaxLength(45)]
         public string Tipo { get; set; }
-
-        [ForeignKey("pessoa_id")]
-        public Pessoa Pessoa { get; set; }
     }
 }

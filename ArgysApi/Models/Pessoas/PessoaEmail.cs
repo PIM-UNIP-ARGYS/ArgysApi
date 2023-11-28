@@ -28,8 +28,5 @@ namespace ArgysApi.Models.Pessoas
         [Column("email")]
         [MaxLength(255)]
         public string Email { get; set; }
-
-        [ForeignKey("pessoa_id")]
-        public Pessoa Pessoa { get; set; }
     }
 }

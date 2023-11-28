@@ -11,9 +11,9 @@ namespace ArgysApi.request.Pessoas
         public InformacoesPessoaisRequest InformacoesPessoais { get; set; }
         public DocumentosRequest Documentos { get; set; }
         public TituloEleitorRequest TituloEleitor { get; set; }
-        public CnhRequest Cnh { get; set; }
+        public CnhRequest? Cnh { get; set; }
         public CtpsRequest Ctps { get; set; }
-        public PassaporteRequest Passaporte { get; set; }
+        public PassaporteRequest? Passaporte { get; set; }
         public EmailRequest Email { get; set; } 
         public TelefoneRequest Telefone { get; set; }
         public EnderecoRequest Endereco { get; set; }
