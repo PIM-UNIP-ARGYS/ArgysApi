@@ -22,11 +22,5 @@ namespace ArgysApi.Models.Vinculos
         [Required]
         [Column("cargo_id")]
         public long CargoId { get; set; }
-
-        [ForeignKey("VinculoId")]
-        public Vinculo Vinculo { get; set; }
-
-        [ForeignKey("CargoId")]
-        public Cargo Cargo { get; set; }
     }
 }

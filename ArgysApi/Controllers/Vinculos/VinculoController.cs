@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ArgysApi.Data;
 using ArgysApi.Models.Vinculos;
+using ArgysApi.request.Vinculos;
+using ArgysApi.mappers.Vinculos;
 
 namespace ArgysApi.Controllers.Vinculos
 {
@@ -84,14 +86,32 @@ namespace ArgysApi.Controllers.Vinculos
         // POST: api/Vinculo
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Vinculo>> PostVinculo(Vinculo vinculo)
+        public async Task<ActionResult<Vinculo>> PostVinculo(VinculoRequest request)
         {
-          if (_context.Vinculo == null)
-          {
-              return Problem("Entity set 'ArgysApiContext.Vinculo'  is null.");
-          }
+            if (_context.Vinculo == null)
+            {
+                return Problem("Entity set 'ArgysApiContext.Vinculo'  is null.");
+            }
+
+            var pessoa = _context.Pessoa.FirstOrDefaultAsync(x => x.Nome == request.Pessoa);
+            var cbo = _context.Cbo.FirstOrDefaultAsync(x => x.Descricao == request.Cbo);
+            var cargo = _context.Cargo.FirstOrDefaultAsync(x => x.Descricao == request.Cargo);
+
+            Vinculo vinculo = VinculoMapper.ToVinculoEntity(request);
+            vinculo.CboId = cbo.Id;
+            vinculo.PessoaId = pessoa.Id;
+
             _context.Vinculo.Add(vinculo);
             await _context.SaveChangesAsync();
+
+            VinculoCargo vinculoCargo = VinculoCargoMapper.ToVinculoCargoEntity(vinculo.Id, cbo.Id);
+            _context.VinculoCargo.Add(vinculoCargo);
+            await _context.SaveChangesAsync();
+
+            VinculoSalario vinculoSalario = VinculoSalarioMapper.ToEntity(request, cbo.Id);
+            _context.VinculoSalario.Add(vinculoSalario);
+            await _context.SaveChangesAsync();
+
 
             return CreatedAtAction("GetVinculo", new { id = vinculo.Id }, vinculo);
         }

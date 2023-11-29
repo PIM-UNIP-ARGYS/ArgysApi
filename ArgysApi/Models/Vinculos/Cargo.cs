@@ -33,11 +33,5 @@ namespace ArgysApi.Models.Vinculos
         [Column("descricao")]
         [MaxLength(45)]
         public string Descricao { get; set; }
-
-        [ForeignKey("EmpresaId")]
-        public Empresa Empresa { get; set; }
-
-        [ForeignKey("CBOId")]
-        public Cbo Cbo { get; set; }
     }
 }

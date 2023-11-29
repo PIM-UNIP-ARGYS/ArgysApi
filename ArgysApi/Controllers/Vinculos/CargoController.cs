@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ArgysApi.Data;
 using ArgysApi.Models.Vinculos;
+using ArgysApi.request.Vinculos;
+using ArgysApi.mappers.Vinculos;
 
 namespace ArgysApi.Controllers.Vinculos
 {
@@ -84,16 +86,22 @@ namespace ArgysApi.Controllers.Vinculos
         // POST: api/Cargo
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Cargo>> PostCargo(Cargo cargo)
+        public async Task<ActionResult<Cargo>> PostCargo(CargoRequest request)
         {
-          if (_context.Cargo == null)
-          {
-              return Problem("Entity set 'ArgysApiContext.Cargo'  is null.");
-          }
+            if (_context.Cargo == null)
+            {
+                return Problem("Entity set 'ArgysApiContext.Cargo'  is null.");
+            }
+
+            var cbo = _context.Cbo.FirstOrDefaultAsync(x => x.Descricao == request.Cbo);
+
+            Cargo cargo = CargoMapper.ToCargoEntity(request);
+            cargo.CboId = cbo.Id;
+
             _context.Cargo.Add(cargo);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCargo", new { id = cargo.Id }, cargo);
+            return CreatedAtAction("GetCargo", cargo);
         }
 
         // DELETE: api/Cargo/5

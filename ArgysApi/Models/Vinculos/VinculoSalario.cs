@@ -52,7 +52,5 @@ namespace ArgysApi.Models.Vinculos
         [MaxLength(255)]
         public string Motivo { get; set; }
 
-        [ForeignKey("VinculoId")]
-        public Vinculo Vinculo { get; set; }
     }
 }
