@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ArgysApi.Data;
 using ArgysApi.Models.Vinculos;
+using ArgysApi.request.Vinculos;
+using ArgysApi.mappers.Vinculos;
 
 namespace ArgysApi.Controllers.Vinculos
 {
@@ -84,16 +86,22 @@ namespace ArgysApi.Controllers.Vinculos
         // POST: api/Cbo
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Cbo>> PostCbo(Cbo cbo)
+        public async Task<ActionResult<Cbo>> PostCbo(CboRequest request)
         {
-          if (_context.Cbo == null)
-          {
-              return Problem("Entity set 'ArgysApiContext.Cbo'  is null.");
-          }
+            if (_context.Cbo == null)
+            {
+                return Problem("Entity set 'ArgysApiContext.Cbo'  is null.");
+            }
+
+            int newCode = this.GetNewCode();
+
+            Cbo cbo = CboMapper.ToCboEntity(request);
+            cbo.Codigo = newCode.ToString();
+
             _context.Cbo.Add(cbo);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCbo", new { id = cbo.Id }, cbo);
+            return CreatedAtAction("GetCbo", cbo);
         }
 
         // DELETE: api/Cbo/5
@@ -119,6 +127,21 @@ namespace ArgysApi.Controllers.Vinculos
         private bool CboExists(long id)
         {
             return (_context.Cbo?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        private int GetNewCode()
+        {
+            var cbo = _context.Cbo.OrderByDescending(p => p.Codigo).FirstOrDefault();
+
+            if (cbo == null)
+            {
+                return 1;
+            }
+
+            var newCode = int.Parse(cbo.Codigo) + 1;
+
+            return newCode;
+
         }
     }
 }

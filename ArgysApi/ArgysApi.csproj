@@ -24,13 +24,11 @@
     <Folder Include="mappers\Feriados\" />
     <Folder Include="mappers\FolhaPagamento\" />
     <Folder Include="mappers\Impostos\" />
-    <Folder Include="mappers\Vinculos\" />
     <Folder Include="Models\FolhaPagamento\" />
     <Folder Include="request\Empresas\" />
     <Folder Include="request\Feriados\" />
     <Folder Include="request\FolhaPagamento\" />
     <Folder Include="request\Impostos\" />
-    <Folder Include="request\Vinculos\" />
     <Folder Include="response\Empresas\" />
     <Folder Include="response\Feriados\" />
     <Folder Include="response\FolhaPagamento\" />

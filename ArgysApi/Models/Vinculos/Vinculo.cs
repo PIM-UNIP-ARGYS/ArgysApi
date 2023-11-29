@@ -47,16 +47,5 @@ namespace ArgysApi.Models.Vinculos
         [Column("fgts_banco_id")]
         public long? FgtsBancoId { get; set; } // Permite valores nulos
 
-        [ForeignKey("PessoaId")]
-        public Pessoa Pessoa { get; set; }
-
-        [ForeignKey("CboId")]
-        public Cbo Cbo { get; set; }
-
-        [ForeignKey("RemBancoId")]
-        public Banco RemBanco { get; set; }
-
-        [ForeignKey("FgtsBancoId")]
-        public Banco FgtsBanco { get; set; }
     }
 }
