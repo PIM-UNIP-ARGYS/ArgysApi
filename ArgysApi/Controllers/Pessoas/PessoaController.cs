@@ -87,7 +87,7 @@ namespace ArgysApi.Controllers.Pessoas
         // POST: api/Pessoa
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PessoaResponse>> PostPessoa(PessoaRequest request)
+        public async Task<ActionResult<Pessoa>> PostPessoa(PessoaRequest request)
         {
             if (_context.Pessoa == null)
             {
@@ -127,9 +127,7 @@ namespace ArgysApi.Controllers.Pessoas
                 await _context.SaveChangesAsync();
             }
 
-            PessoaResponse response = PessoaMapper.ToPessoaResponse(pessoa, email, endereco, telefone);    
-
-            return CreatedAtAction("GetPessoa", response);
+            return CreatedAtAction("GetPessoa", pessoa);
         }
 
         // DELETE: api/Pessoa/5

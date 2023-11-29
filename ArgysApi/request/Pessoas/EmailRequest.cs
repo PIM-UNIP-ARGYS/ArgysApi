@@ -6,7 +6,7 @@ namespace ArgysApi.request.Pessoas
 {
     public class EmailRequest
     {
-        public string Contato { get; set; }
-        public string Email { get; set; }
+        public string? Contato { get; set; }
+        public string? Email { get; set; }
     }
 }

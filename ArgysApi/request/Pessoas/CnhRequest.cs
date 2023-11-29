@@ -6,11 +6,11 @@ namespace ArgysApi.request.Pessoas
 {
     public class CnhRequest
     {
-        public string Numero { get; set; }
-        public string Categoria { get; set; }
-        public DateTime DataPrimeiraCnh { get; set; }
-        public string Uf { get; set; }
-        public DateTime Expedicao { get; set; }
-        public DateTime DataValidade { get; set; }
+        public string? Numero { get; set; }
+        public string? Categoria { get; set; }
+        public DateTime? DataPrimeiraCnh { get; set; }
+        public string? Uf { get; set; }
+        public DateTime? Expedicao { get; set; }
+        public DateTime? DataValidade { get; set; }
     }
 }

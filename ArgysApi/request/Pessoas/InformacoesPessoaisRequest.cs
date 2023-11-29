@@ -16,6 +16,6 @@ namespace ArgysApi.request.Pessoas
         public bool CotaDeficiencia { get; set; }
         public bool Proprietario { get; set; }
         public string Mae { get; set; }
-        public string Pai { get; set; }
+        public string? Pai { get; set; }
     }
 }

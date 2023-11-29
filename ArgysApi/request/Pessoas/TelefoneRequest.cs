@@ -6,8 +6,8 @@ namespace ArgysApi.request.Pessoas
 {
     public class TelefoneRequest
     {
-        public string Contato { get; set; }
-        public string Telefone { get; set; }
-        public string Tipo { get; set; }    
+        public string? Contato { get; set; }
+        public string? Telefone { get; set; }
+        public string? Tipo { get; set; }    
     }
 }

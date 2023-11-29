@@ -6,7 +6,7 @@ namespace ArgysApi.request.Pessoas
 {
     public class PassaporteRequest
     {
-        public string Numero { get; set; }
-        public DateTime Validade { get; set; }
+        public string? Numero { get; set; }
+        public DateTime? Validade { get; set; }
     }
 }
