@@ -12,6 +12,22 @@ namespace ArgysApi.mappers.Pessoas
 {
     public static class PessoaMapper
     {
+        public static PessoaResumeResponse ToResumeResponse(this Pessoa model)
+        {
+            return new PessoaResumeResponse
+            {
+                Uuid = model.Uuid,
+                Codigo = model.Codigo,
+                Cpf = model.CPF,
+                Ctps = model.CtpsNumero,
+                Nome = model.Nome,
+                Rg = model.RG,
+                TituloEleitor = model.TituloEleitor,
+                DataNascimento = model.DataNascimento.ToString("dd/MM/yyyy"),
+                PisNis = model.PIS_NIS
+            };
+        }
+
         public static Pessoa ToPessoaEntity(this PessoaRequest request)
         {
             return new Pessoa

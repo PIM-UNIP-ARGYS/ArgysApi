@@ -33,7 +33,6 @@
     <Folder Include="response\Feriados\" />
     <Folder Include="response\FolhaPagamento\" />
     <Folder Include="response\Impostos\" />
-    <Folder Include="response\Vinculos\" />
   </ItemGroup>
 
 </Project>

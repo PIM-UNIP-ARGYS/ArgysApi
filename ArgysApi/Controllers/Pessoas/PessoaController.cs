@@ -26,13 +26,18 @@ namespace ArgysApi.Controllers.Pessoas
 
         // GET: api/Pessoa
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Pessoa>>> GetPessoa()
+        public async Task<ActionResult<IEnumerable<PessoaResumeResponse>>> GetPessoa()
         {
-          if (_context.Pessoa == null)
-          {
-              return NotFound();
-          }
-            return await _context.Pessoa.ToListAsync();
+            if (_context.Pessoa == null)
+            {
+                return NotFound();
+            }
+
+            var pessoas = await _context.Pessoa.ToListAsync();
+
+            var response = pessoas.Select(PessoaMapper.ToResumeResponse).ToList();
+
+            return response;
         }
 
         // GET: api/Pessoa/5
