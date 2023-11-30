@@ -80,9 +80,5 @@ namespace ArgysApi.Models.Empresas
         [Required]
         [Column("grupo_empresa_id")]
         public long GrupoEmpresaId { get; set; }
-
-
-        [ForeignKey("grupo_empresa_id")]
-        public GrupoEmpresa GrupoEmpresa { get; set; }
     }
 }

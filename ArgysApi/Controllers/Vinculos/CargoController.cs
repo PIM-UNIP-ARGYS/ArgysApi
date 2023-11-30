@@ -93,10 +93,13 @@ namespace ArgysApi.Controllers.Vinculos
                 return Problem("Entity set 'ArgysApiContext.Cargo'  is null.");
             }
 
-            var cbo = _context.Cbo.FirstOrDefaultAsync(x => x.Descricao == request.Cbo);
+            int newCode = GetNewCode();
+
+            var cbo = await _context.Cbo.FirstOrDefaultAsync(x => x.Descricao == request.Cbo);
 
             Cargo cargo = CargoMapper.ToCargoEntity(request);
             cargo.CboId = cbo.Id;
+            cargo.Codigo = newCode.ToString();
 
             _context.Cargo.Add(cargo);
             await _context.SaveChangesAsync();
@@ -127,6 +130,21 @@ namespace ArgysApi.Controllers.Vinculos
         private bool CargoExists(long id)
         {
             return (_context.Cargo?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        private int GetNewCode()
+        {
+            var cargo = _context.Cargo.OrderByDescending(p => p.Codigo).FirstOrDefault();
+
+            if (cargo == null)
+            {
+                return 1;
+            }
+
+            var newCode = int.Parse(cargo.Codigo) + 1;
+
+            return newCode;
+
         }
     }
 }

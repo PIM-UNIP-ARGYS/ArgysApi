@@ -10,7 +10,7 @@ namespace ArgysApi.mappers.Vinculos
             return new Cargo
             {
                 Uuid = Guid.NewGuid().ToString(),
-                EmpresaId = 1L, //Empresa Default
+                EmpresaId = 4L, //Empresa Default
                 Descricao = request.Descricao,
             };
         }
