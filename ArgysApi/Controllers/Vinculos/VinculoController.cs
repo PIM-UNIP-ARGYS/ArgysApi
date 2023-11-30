@@ -93,22 +93,25 @@ namespace ArgysApi.Controllers.Vinculos
                 return Problem("Entity set 'ArgysApiContext.Vinculo'  is null.");
             }
 
-            var pessoa = _context.Pessoa.FirstOrDefaultAsync(x => x.Nome == request.Pessoa);
-            var cbo = _context.Cbo.FirstOrDefaultAsync(x => x.Descricao == request.Cbo);
-            var cargo = _context.Cargo.FirstOrDefaultAsync(x => x.Descricao == request.Cargo);
+            int newCode = GetNewCode();
+
+            var pessoa = await _context.Pessoa.FirstOrDefaultAsync(x => x.Nome == request.Pessoa);
+            var cbo = await _context.Cbo.FirstOrDefaultAsync(x => x.Descricao == request.Cbo);
+            var cargo = await _context.Cargo.FirstOrDefaultAsync(x => x.Descricao == request.Cargo);
 
             Vinculo vinculo = VinculoMapper.ToVinculoEntity(request);
             vinculo.CboId = cbo.Id;
             vinculo.PessoaId = pessoa.Id;
+            vinculo.Matricula = newCode.ToString();
 
             _context.Vinculo.Add(vinculo);
             await _context.SaveChangesAsync();
 
-            VinculoCargo vinculoCargo = VinculoCargoMapper.ToVinculoCargoEntity(vinculo.Id, cbo.Id);
+            VinculoCargo vinculoCargo = VinculoCargoMapper.ToVinculoCargoEntity(vinculo.Id, cargo.Id);
             _context.VinculoCargo.Add(vinculoCargo);
             await _context.SaveChangesAsync();
 
-            VinculoSalario vinculoSalario = VinculoSalarioMapper.ToEntity(request, cbo.Id);
+            VinculoSalario vinculoSalario = VinculoSalarioMapper.ToEntity(request, vinculo.Id);
             _context.VinculoSalario.Add(vinculoSalario);
             await _context.SaveChangesAsync();
 
@@ -139,6 +142,21 @@ namespace ArgysApi.Controllers.Vinculos
         private bool VinculoExists(long id)
         {
             return (_context.Vinculo?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        private int GetNewCode()
+        {
+            var vinculo = _context.Vinculo.OrderByDescending(p => p.Matricula).FirstOrDefault();
+
+            if (vinculo == null)
+            {
+                return 1;
+            }
+
+            var newCode = int.Parse(vinculo.Matricula) + 1;
+
+            return newCode;
+
         }
     }
 }
