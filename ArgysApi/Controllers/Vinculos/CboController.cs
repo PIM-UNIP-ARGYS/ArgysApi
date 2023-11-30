@@ -9,6 +9,7 @@ using ArgysApi.Data;
 using ArgysApi.Models.Vinculos;
 using ArgysApi.request.Vinculos;
 using ArgysApi.mappers.Vinculos;
+using ArgysApi.response.Vinculos;
 
 namespace ArgysApi.Controllers.Vinculos
 {
@@ -25,13 +26,17 @@ namespace ArgysApi.Controllers.Vinculos
 
         // GET: api/Cbo
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cbo>>> GetCbo()
+        public async Task<ActionResult<IEnumerable<CboResumeResponse>>> GetCbo()
         {
-          if (_context.Cbo == null)
-          {
-              return NotFound();
-          }
-            return await _context.Cbo.ToListAsync();
+            if (_context.Cbo == null)
+            {
+                return NotFound();
+            }
+
+            var cbos = await _context.Cbo.ToListAsync();
+
+            var response = cbos.Select(CboMapper.ToResumeResponse).ToList();
+            return response;
         }
 
         // GET: api/Cbo/5

@@ -9,6 +9,7 @@ using ArgysApi.Data;
 using ArgysApi.Models.Vinculos;
 using ArgysApi.request.Vinculos;
 using ArgysApi.mappers.Vinculos;
+using ArgysApi.response.Vinculos;
 
 namespace ArgysApi.Controllers.Vinculos
 {
@@ -25,13 +26,18 @@ namespace ArgysApi.Controllers.Vinculos
 
         // GET: api/Cargo
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cargo>>> GetCargo()
+        public async Task<ActionResult<IEnumerable<CargoResumeResponse>>> GetCargo()
         {
-          if (_context.Cargo == null)
-          {
-              return NotFound();
-          }
-            return await _context.Cargo.ToListAsync();
+            if (_context.Cargo == null)
+            {
+                return NotFound();
+            }
+
+            var cargos = await _context.Cargo.ToListAsync();
+
+            var responses = cargos.Select(x => CargoMapper.ToResumeResponse(x, _context)).ToList();
+
+            return responses;
         }
 
         // GET: api/Cargo/5
