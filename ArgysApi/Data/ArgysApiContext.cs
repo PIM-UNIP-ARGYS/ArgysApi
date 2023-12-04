@@ -93,5 +93,7 @@ namespace ArgysApi.Data
         public DbSet<ArgysApi.Models.Vinculos.VinculoSalario> VinculoSalario { get; set; } = default!;
 
         public DbSet<ArgysApi.Models.Vinculos.VinculoTransporte> VinculoTransporte { get; set; } = default!;
+
+        public DbSet<ArgysApi.Models.FolhaPagamento.Fp> Fp { get; set; } = default!;
     }
 }

@@ -14,7 +14,9 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddDbContext<ArgysApiContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ArgysApiContext") ?? throw new InvalidOperationException("Connection string 'ArgysApiContext' not found.")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("ArgysApiContext") ?? throw new InvalidOperationException("Connection string 'ArgysApiContext' not found.")),
+        ServiceLifetime.Scoped);
 
 // Add services to the container.
 

@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.12">
@@ -19,12 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\FolhaPagamento\" />
     <Folder Include="mappers\Empresas\" />
     <Folder Include="mappers\Feriados\" />
     <Folder Include="mappers\FolhaPagamento\" />
     <Folder Include="mappers\Impostos\" />
-    <Folder Include="Models\FolhaPagamento\" />
     <Folder Include="request\Empresas\" />
     <Folder Include="request\Feriados\" />
     <Folder Include="request\FolhaPagamento\" />
